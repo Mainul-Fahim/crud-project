@@ -23,7 +23,7 @@ const createUser = async (req: Request, res: Response) => {
 
         res.status(200).json({
             success: true,
-            message: 'User is created successfully',
+            message: 'User is created successfully!',
             data: result
         })
     } catch (error) {
@@ -40,7 +40,7 @@ const getAllUser = async (req: Request, res: Response) => {
 
         res.status(200).json({
             success: true,
-            message: 'User fetched successfully',
+            message: 'User fetched successfully!',
             data: result
         })
     } catch (error) {
@@ -62,7 +62,7 @@ const getUserById = async (req: Request, res: Response) => {
             // Send the user object without the password
             res.status(200).json({
                 success: true,
-                message: 'User fetched successfully',
+                message: 'User fetched successfully!',
                 data: result,
             });
         } else {
@@ -106,7 +106,7 @@ const updateUserById = async (req: Request, res: Response) => {
             // Send the user object without the password
             res.status(200).json({
                 success: true,
-                message: 'User updated successfully',
+                message: 'User updated successfully!',
                 data: result,
             });
         } else {
@@ -135,11 +135,25 @@ const deleteUserById = async (req: Request, res: Response) => {
         
         const result = await userServices.deleteUserFromDB(userId);
 
-        res.status(200).json({
-            success: true,
-            message: 'User deleted successfully',
-            data: result
-        })
+        
+        if (result) {
+            // Send the user object without the password
+            res.status(200).json({
+                success: true,
+                message: 'User deleted successfully!',
+                data: null,
+            });
+        } else {
+            // Respond with a user not found message
+            res.status(404).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
         
