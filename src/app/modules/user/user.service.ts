@@ -1,7 +1,7 @@
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
 
-
+// users api
 const createUserIntoDB = async (user: IUser) => {
 
     try {
@@ -70,6 +70,8 @@ const deleteUserFromDB = async (userId: number) => {
     }
 }
 
+// Orders Api
+
 const updateOrderFromDB = async (userId: number, user: IUser) => {
 
     try {
@@ -88,11 +90,28 @@ const updateOrderFromDB = async (userId: number, user: IUser) => {
     }
 }
 
+const allOrdersFromDB = async (userId: number) => {
+
+    try {
+        const res = await User.isUserExists(userId);
+        if (res) {
+          const result = await User.find().select('orders');
+            return result;
+        }
+        return res;
+    } catch (error) {
+        console.error('Error saving user:', error);
+        throw error; // Re-throw the error to handle it at a higher level if needed
+    }
+}
+
+
 export const userServices = {
     createUserIntoDB,
     allUsersFromDB,
     singleUserFromDB,
     UpdateUserFromDB,
     deleteUserFromDB,
-    updateOrderFromDB
+    updateOrderFromDB,
+    allOrdersFromDB
 }
