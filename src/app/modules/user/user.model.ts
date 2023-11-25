@@ -40,4 +40,15 @@ userSchema.pre('save', async function (next) {
 
 })
 
+userSchema.statics.isUserExists = async function (userId: number) {
+    const existingUser = await this.findOne({ userId });
+    return existingUser !== null; // Return true if user exists, false otherwise
+};
+
+// userSchema.post('find', async function (doc,next) {
+//     doc = doc.select('-password')
+//     next();
+
+// })
+
 export const User = model<IUser,UserModel>('User', userSchema);
