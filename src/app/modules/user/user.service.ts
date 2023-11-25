@@ -5,6 +5,9 @@ import { User } from "./user.model";
 const createUserIntoDB = async (user: IUser) => {
 
     try {
+        if (await User.isUserExists(user.userId)) {
+            throw new Error('User already exists!');
+          }
         const result = await User.create(user);
         const { password, ...userWithoutPassword } = result.toObject()
         console.log('User saved successfully:', userWithoutPassword);
@@ -41,7 +44,7 @@ const UpdateUserFromDB = async (userId: number, user: IUser) => {
 
     try {
         await User.updateOne({ userId }, user);
-        const res = singleUserFromDB(userId)
+        const res = await singleUserFromDB(userId)
         return res;
     } catch (error) {
         console.error('Error saving user:', error);

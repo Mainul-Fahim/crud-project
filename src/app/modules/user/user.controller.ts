@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { userServices } from "./user.service";
+import userValidationSchema from "./user.validation";
 
 
 const createUser = async (req: Request, res: Response) => {
@@ -7,7 +8,18 @@ const createUser = async (req: Request, res: Response) => {
     
     try {
         const userData = req.body;
-        const result = await userServices.createUserIntoDB(userData)
+        const {error,value} = userValidationSchema.validate(userData,{ abortEarly: false });
+
+        if (error) {
+            return res.status(400).json({
+                success: false,
+                message: 'Validation error',
+                error: error.details,
+            });
+        }
+
+        const result = await userServices.createUserIntoDB(value)
+
 
         res.status(200).json({
             success: true,
@@ -62,9 +74,20 @@ const updateUserById = async (req: Request, res: Response) => {
     const userId = Number(req.params.userId);
     const userData = req.body;
     console.log(userData);
+
+    const {error,value} = userValidationSchema.validate(userData,{ abortEarly: false });
+
+        if (error) {
+            return res.status(400).json({
+                success: false,
+                message: 'Validation error',
+                error: error.details,
+            });
+        }
+
     try {
         
-        const result = await userServices.UpdateUserFromDB(userId,userData);
+        const result = await userServices.UpdateUserFromDB(userId,value);
 
         res.status(200).json({
             success: true,
