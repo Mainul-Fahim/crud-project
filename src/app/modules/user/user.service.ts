@@ -70,10 +70,29 @@ const deleteUserFromDB = async (userId: number) => {
     }
 }
 
+const updateOrderFromDB = async (userId: number, user: IUser) => {
+
+    try {
+        const res = await User.isUserExists(userId);
+        if (res) {
+            await User.updateOne({ userId }, {
+                $push: {
+                    orders: user,
+                },
+            });
+        }
+        return res;
+    } catch (error) {
+        console.error('Error saving user:', error);
+        throw error; // Re-throw the error to handle it at a higher level if needed
+    }
+}
+
 export const userServices = {
     createUserIntoDB,
     allUsersFromDB,
     singleUserFromDB,
     UpdateUserFromDB,
-    deleteUserFromDB
+    deleteUserFromDB,
+    updateOrderFromDB
 }

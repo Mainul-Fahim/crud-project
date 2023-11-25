@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userServices } from "./user.service";
-import userValidationSchema from "./user.validation";
+import userValidationSchema, { orderValidationSchema } from "./user.validation";
 
 
 const createUser = async (req: Request, res: Response) => {
@@ -160,10 +160,55 @@ const deleteUserById = async (req: Request, res: Response) => {
     }
 }
 
+const updateOrderInUser = async (req: Request, res: Response) => {
+    
+    const userId = Number(req.params.userId);
+    const orderData = req.body;
+    console.log(orderData);
+
+    const {error,value} = orderValidationSchema.validate(orderData,{ abortEarly: false });
+
+        if (error) {
+            return res.status(400).json({
+                success: false,
+                message: 'Validation error',
+                error: error.details,
+            });
+        }
+
+    try {
+        
+        const result = await userServices.updateOrderFromDB(userId,value);
+
+        if (result) {
+            // Send the user object without the password
+            res.status(200).json({
+                success: true,
+                message: 'Order created successfully!',
+                data: null,
+            });
+        } else {
+            // Respond with a user not found message
+            res.status(404).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 export const userControllers = {
     createUser,
     getAllUser,
     getUserById,
     updateUserById,
-    deleteUserById
+    deleteUserById,
+    updateOrderInUser
 }
