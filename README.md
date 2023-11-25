@@ -1,7 +1,7 @@
 # crud-project
 
 ## clone the repo
-- git clone https://github.com/your-username/your-project.git
+- git clone 'url'
 - cd your-project
 
 ## install the dependencies
