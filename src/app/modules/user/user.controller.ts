@@ -236,6 +236,38 @@ const allOrderInUser = async (req: Request, res: Response) => {
     }
 }
 
+const ordersPriceInUser = async (req: Request, res: Response) => {
+    
+    const userId = Number(req.params.userId);
+
+    try {
+        
+        const result = await userServices.totalOrdersPriceFromDB(userId);
+
+        if (result) {
+            // Send the user object without the password
+            res.status(200).json({
+                success: true,
+                message: 'Total price calculated successfully!',
+                data: {totalPrice:result},
+            });
+        } else {
+            // Respond with a user not found message
+            res.status(404).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 export const userControllers = {
     createUser,
     getAllUser,
@@ -243,5 +275,6 @@ export const userControllers = {
     updateUserById,
     deleteUserById,
     updateOrderInUser,
-    allOrderInUser
+    allOrderInUser,
+    ordersPriceInUser
 }

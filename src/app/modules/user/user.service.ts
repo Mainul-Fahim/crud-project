@@ -105,6 +105,37 @@ const allOrdersFromDB = async (userId: number) => {
     }
 }
 
+const totalOrdersPriceFromDB = async (userId: number) => {
+
+    try {
+        const res = await User.isUserExists(userId);
+        if (res) {
+          const result = await User.aggregate([
+            {
+                $match: {userId}
+            },
+            {
+                $unwind: '$orders'
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalOrderPrice: { $sum: '$orders.price' },
+                },
+            }
+          ]);
+          if (result.length > 0) {
+            return result[0].totalOrderPrice || 0;
+        } else {
+            return 0;
+        }
+        }
+        return res;
+    } catch (error) {
+        console.error('Error saving user:', error);
+        throw error; // Re-throw the error to handle it at a higher level if needed
+    }
+}
 
 export const userServices = {
     createUserIntoDB,
@@ -113,5 +144,6 @@ export const userServices = {
     UpdateUserFromDB,
     deleteUserFromDB,
     updateOrderFromDB,
-    allOrdersFromDB
+    allOrdersFromDB,
+    totalOrdersPriceFromDB
 }
