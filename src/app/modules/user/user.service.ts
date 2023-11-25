@@ -14,7 +14,7 @@ const createUserIntoDB = async (user: IUser) => {
         return userWithoutPassword;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error;
     }
 }
 
@@ -25,19 +25,18 @@ const allUsersFromDB = async () => {
         return result;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
 const singleUserFromDB = async (userId: number) => {
 
     try {
-        // const result = await User.find({ userId }).select('-password -_id');
         const result = await User.isUserExists(userId);
         return result;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
@@ -52,7 +51,7 @@ const UpdateUserFromDB = async (userId: number, user: IUser) => {
         return result;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
@@ -66,7 +65,7 @@ const deleteUserFromDB = async (userId: number) => {
         return res;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
@@ -86,7 +85,7 @@ const updateOrderFromDB = async (userId: number, user: IUser) => {
         return res;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
@@ -101,7 +100,7 @@ const allOrdersFromDB = async (userId: number) => {
         return res;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
@@ -133,7 +132,7 @@ const totalOrdersPriceFromDB = async (userId: number) => {
         return res;
     } catch (error) {
         console.error('Error saving user:', error);
-        throw error; // Re-throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 

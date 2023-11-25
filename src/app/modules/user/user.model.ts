@@ -44,10 +44,5 @@ userSchema.statics.isUserExists = async function (userId: number) {
      return await this.findOne({ userId }).select('-password') || null;
 };
 
-// userSchema.post('find', async function (doc,next) {
-//     doc = doc.select('-password')
-//     next();
-
-// })
 
 export const User = model<IUser,UserModel>('User', userSchema);

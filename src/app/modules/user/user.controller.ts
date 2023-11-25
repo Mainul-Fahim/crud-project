@@ -59,14 +59,14 @@ const getUserById = async (req: Request, res: Response) => {
         const result = await userServices.singleUserFromDB(userId);
 
         if (result) {
-            // Send the user object without the password
+           
             res.status(200).json({
                 success: true,
                 message: 'User fetched successfully!',
                 data: result,
             });
         } else {
-            // Respond with a user not found message
+            
             res.status(404).json({
                 success: false,
                 message: 'User not found',
@@ -103,14 +103,14 @@ const updateUserById = async (req: Request, res: Response) => {
         const result = await userServices.UpdateUserFromDB(userId,value);
 
         if (result) {
-            // Send the user object without the password
+         
             res.status(200).json({
                 success: true,
                 message: 'User updated successfully!',
                 data: result,
             });
         } else {
-            // Respond with a user not found message
+          
             res.status(404).json({
                 success: false,
                 message: 'User not found',
@@ -137,14 +137,14 @@ const deleteUserById = async (req: Request, res: Response) => {
 
         
         if (result) {
-            // Send the user object without the password
+            
             res.status(200).json({
                 success: true,
                 message: 'User deleted successfully!',
                 data: null,
             });
         } else {
-            // Respond with a user not found message
+           
             res.status(404).json({
                 success: false,
                 message: 'User not found',
@@ -181,14 +181,14 @@ const updateOrderInUser = async (req: Request, res: Response) => {
         const result = await userServices.updateOrderFromDB(userId,value);
 
         if (result) {
-            // Send the user object without the password
+            
             res.status(200).json({
                 success: true,
                 message: 'Order created successfully!',
                 data: null,
             });
         } else {
-            // Respond with a user not found message
+            
             res.status(404).json({
                 success: false,
                 message: 'User not found',
@@ -213,14 +213,14 @@ const allOrderInUser = async (req: Request, res: Response) => {
         const result = await userServices.allOrdersFromDB(userId);
 
         if (result) {
-            // Send the user object without the password
+           
             res.status(200).json({
                 success: true,
                 message: 'Order fetched successfully!',
                 data: result,
             });
         } else {
-            // Respond with a user not found message
+           
             res.status(404).json({
                 success: false,
                 message: 'User not found',
@@ -245,14 +245,14 @@ const ordersPriceInUser = async (req: Request, res: Response) => {
         const result = await userServices.totalOrdersPriceFromDB(userId);
 
         if (result) {
-            // Send the user object without the password
+           
             res.status(200).json({
                 success: true,
                 message: 'Total price calculated successfully!',
                 data: {totalPrice:result},
             });
         } else {
-            // Respond with a user not found message
+            
             res.status(404).json({
                 success: false,
                 message: 'User not found',

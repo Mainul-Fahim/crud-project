@@ -1,13 +1,13 @@
 import Joi from 'joi';
 
-// Define a Joi schema for the Order
+// Joi schema for the Order
 export const orderValidationSchema = Joi.object({
     productName: Joi.string().required(),
     price: Joi.number().required(),
     quantity: Joi.number().required(),
 });
 
-// Define a Joi schema for the User
+// Joi schema for the User
 const userValidationSchema = Joi.object({
     userId: Joi.number().required(),
     username: Joi.string()
