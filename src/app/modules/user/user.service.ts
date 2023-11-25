@@ -7,7 +7,7 @@ const createUserIntoDB = async (user: IUser) => {
     try {
         if (await User.isUserExists(user.userId)) {
             throw new Error('User already exists!');
-          }
+        }
         const result = await User.create(user);
         const { password, ...userWithoutPassword } = result.toObject()
         console.log('User saved successfully:', userWithoutPassword);
@@ -32,7 +32,8 @@ const allUsersFromDB = async () => {
 const singleUserFromDB = async (userId: number) => {
 
     try {
-        const result = await User.find({ userId }).select('-password -_id');
+        // const result = await User.find({ userId }).select('-password -_id');
+        const result = await User.isUserExists(userId);
         return result;
     } catch (error) {
         console.error('Error saving user:', error);
@@ -43,9 +44,12 @@ const singleUserFromDB = async (userId: number) => {
 const UpdateUserFromDB = async (userId: number, user: IUser) => {
 
     try {
-        await User.updateOne({ userId }, user);
-        const res = await singleUserFromDB(userId)
-        return res;
+        const res = await User.isUserExists(userId);
+        if (res) {
+            await User.updateOne({ userId }, user);
+        }
+        const result = await singleUserFromDB(userId)
+        return result;
     } catch (error) {
         console.error('Error saving user:', error);
         throw error; // Re-throw the error to handle it at a higher level if needed

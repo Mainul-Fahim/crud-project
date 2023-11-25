@@ -58,11 +58,24 @@ const getUserById = async (req: Request, res: Response) => {
         
         const result = await userServices.singleUserFromDB(userId);
 
-        res.status(200).json({
-            success: true,
-            message: 'User fetched successfully',
-            data: result
-        })
+        if (result) {
+            // Send the user object without the password
+            res.status(200).json({
+                success: true,
+                message: 'User fetched successfully',
+                data: result,
+            });
+        } else {
+            // Respond with a user not found message
+            res.status(404).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
         
@@ -89,11 +102,24 @@ const updateUserById = async (req: Request, res: Response) => {
         
         const result = await userServices.UpdateUserFromDB(userId,value);
 
-        res.status(200).json({
-            success: true,
-            message: 'User updated successfully',
-            data: result
-        })
+        if (result) {
+            // Send the user object without the password
+            res.status(200).json({
+                success: true,
+                message: 'User updated successfully',
+                data: result,
+            });
+        } else {
+            // Respond with a user not found message
+            res.status(404).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
         
