@@ -1,14 +1,14 @@
 # crud-project
 
 ## clone the repo
-- git clone 'url'
+- git clone https://github.com/Mainul-Fahim/crud-project.git
 - cd your-project
 
 ## install the dependencies
 - npm install
 
 ## create env file
-
+ - write env variables
 ## For running locally
 - npm run start:dev
 
